@@ -84,6 +84,9 @@ export interface ILead extends Document {
   resumeFilename: string;
   resumeMimeType: string;
   leadAnalysisId: mongoose.Types.ObjectId; // → LeadAnalysis
+
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 const LeadSchema = new Schema<ILead>(

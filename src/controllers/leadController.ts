@@ -30,7 +30,7 @@ export const getLeadsWithAnalysis = async (req: Request, res: Response) => {
     resumeUrl: lead.resumeUrl,
     createdAt: lead.createdAt,
     updatedAt: lead.updatedAt,
-    analysis: lead.analysisId ?? null,
+    analysis: lead.leadAnalysisId ?? null,
   }));
 
   res.json({ leads: formatted });

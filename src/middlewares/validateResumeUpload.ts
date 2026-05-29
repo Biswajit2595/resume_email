@@ -25,7 +25,7 @@ export const validateResumeUpload = (
   }
 
   // File type
-  if (!config.resume.allowedMimeTypes.includes(req.file.mimetype)) {
+  if (!(config.resume.allowedMimeTypes as readonly string[]).includes(req.file.mimetype)) {
     throw new AppError(
       ErrorCode.UNSUPPORTED_FILE_TYPE,
       `Unsupported file type: ${req.file.mimetype}`,

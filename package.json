@@ -34,7 +34,6 @@
     "pino": "^8.16.0",
     "pino-pretty": "^10.1.0",
     "rate-limiter-flexible": "^2.3.1",
-    "sharp": "^0.33.5",
     "zod": "^3.23.2"
   },
   "devDependencies": {

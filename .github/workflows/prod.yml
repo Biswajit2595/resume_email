@@ -1,0 +1,49 @@
+name: Deploy to Ec2
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+
+    - name: Setup Nodejs
+      uses: actions/setup-node@v4
+
+      with:
+        node-version: '20'
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Run Eslint
+      run: npm run lint
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: checks
+
+    steps:
+      - name: SSH into EC2 and deploy
+        uses: appleboy/ssh-action@v1.0.0
+
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ubuntu
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: | 
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+            cd resume_email
+            git checkout -- .
+            git pull origin main
+            npm install
+            npm run build
+            pm2 restart resume_email --update-env
